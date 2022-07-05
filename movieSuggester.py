@@ -58,7 +58,7 @@ def getMovies(genre = None, userRating = None, streamingServices = None):
         randomPage = random.randint(1, totalPages)
 
         url = "https://api.themoviedb.org/3/discover/movie?api_key=" + tmdbKey + \
-             "&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=" + str(randomPage)
+              "&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=" + str(randomPage)
 
     response = requests.get(url)
     response = response.json()
