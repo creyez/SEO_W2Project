@@ -3,16 +3,43 @@ import random
 import pandas as pd
 import sqlalchemy as db
 
-tmdbKey = ""
+tmdbKey = "37909ab2a58f4d635646887a974c77a1"
 omdbKey = ""
 
 def getGenre():
+    url = "https://api.themoviedb.org/3/genre/movie/list?api_key=" + tmdbKey + "&language=en-US"
+    response = requests.get(url)
+    response = response.json()
+
+    genreList = [genre['name'] for genre in response['genres']]
+    idList = [genre['id'] for genre in response['genres']]
+
+    genreOrNo = input("Would you like to specify a genre for the movie suggestion? (yes or no): ")
+
+    if genreOrNo.lower() == "yes":
+        print("Here are the genres available:")
+        print(genreList)
+
+        userGenre = input("Enter a genre: ").lower().capitalize()
+
+        while userGenre not in genreList:
+            userGenre = input("Invalid input. Enter a genre listed above: ").lower().capitalize()
+
+        return idList[genreList.index(userGenre)]
+
+    elif genreOrNo.lower() == "no":
+        return -1
+    else:
+        print("Invalid input. Type 'yes' or 'no'")
+        getGenre()
+
 
 
 def getUserRating():
+    rating = input("Would you like to specify a minimum user rating? (yes or no): ")
 
 
-def getStreamingServices():
+# def getStreamingServices():
 
 
 
@@ -42,5 +69,4 @@ def displayMovie(data):
     response = requests.get(url)
     response = response.json()
 
-def getStreamingServices(movieData):
-
+print(getGenre())
