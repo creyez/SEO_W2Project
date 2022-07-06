@@ -127,5 +127,13 @@ def displayMovie(data):
     response = requests.get(url)
     response = response.json()
 
+def createDatabase(data):
+    # Convert python dict into pandas data frame
+    # convert pandas data frame to a sql dataframe 
+    # query a result
+    # display the result to the user 
+    pass
+
+
 
 print(getUserRating())
