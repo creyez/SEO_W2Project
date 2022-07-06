@@ -101,14 +101,16 @@ def getStreamingServices():
 
 
 def getMovies(genre="", userRating="", streamingServices=""):
-
     if streamingServices != "":
         selectedSS = random.choice(streamingServices)
+    else:
+        selectedSS = ""
 
-    url = "https://api.themoviedb.org/3/discover/movie?api_key=" + tmdbKey + \
-          "&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=true&page=1&vote_count.gte=20" \
-          "&vote_average.gte=" + str(userRating) + "&with_genres=" + str(genre) + "&with_watch_providers=" + str(selectedSS) + \
-          "&watch_region=us "
+    url = "https://api.themoviedb.org/3/discover/movie?api_key=" + tmdbKey + "&language=en-US" \
+                                                                             "&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&vote_count.gte=20&vote_average.gte" \
+                                                                             "=" + str(
+        userRating) + "&with_genres=" + str(genre) + "&with_watch_providers=" + str(selectedSS) + \
+          "&watch_region=US"
 
     response = requests.get(url)
     response = response.json()
@@ -120,9 +122,10 @@ def getMovies(genre="", userRating="", streamingServices=""):
     randomPage = random.randint(1, totalPages)
 
     url = "https://api.themoviedb.org/3/discover/movie?api_key=" + tmdbKey + \
-          "&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=true&page=" + str(randomPage) + \
-          "&vote_count.gte=20&vote_average.gte=" + str(userRating) + "&with_genres=" + str(genre) + "&with_watch_providers=" + \
-          str(selectedSS) + "&watch_region=us "
+          "&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=" + str(randomPage) + \
+          "&vote_count.gte=20&vote_average.gte=" + str(userRating) + "&with_genres=" + str(
+        genre) + "&with_watch_providers=" + \
+          str(selectedSS) + "&watch_region=US"
 
     response = requests.get(url)
     response = response.json()
@@ -134,6 +137,7 @@ def displayMovie(data):
     response = requests.get(url)
     response = response.json()
 
+
 def createDatabase(data):
     # Convert python dict into pandas data frame
     # convert pandas data frame to a sql dataframe 
@@ -142,7 +146,6 @@ def createDatabase(data):
     pass
 
 
+movies = getMovies(getGenre(), getUserRating(), getStreamingServices())
 
-# print(getUserRating())
-
-print(getMovies(28, 7, 9))
+print(movies["results"][0]["title"])
