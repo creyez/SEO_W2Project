@@ -9,6 +9,6 @@
   * Import Random
 
 * **What APIs to use**
- * Open Movies Database(OMDb)
- * The Movie Database (TMDb)
+   * Open Movies Database(OMDb)
+   * The Movie Database (TMDb)
   
