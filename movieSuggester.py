@@ -29,7 +29,7 @@ def getGenre():
         return idList[genreList.index(userGenre)]
 
     elif genreOrNo.lower() == "no":
-        return None
+        return ""
     else:
         print("Invalid input. Type 'yes' or 'no'")
         getGenre()
@@ -54,7 +54,7 @@ def getUserRating():
         return userRating
 
     elif ratingOrNO.lower() == "no":
-        return None
+        return ""
     else:
         print("Invalid input. Type 'yes' or 'no'")
         getUserRating()
@@ -94,28 +94,35 @@ def getStreamingServices():
         return [idList[streamingServices.index(service)] for service in userSS]
 
     elif serviceOrNo.lower() == "no":
-        return None
+        return ""
     else:
         print("Invalid input. Type 'yes' or 'no'")
         getStreamingServices()
 
 
-def getMovies(genre=None, userRating=None, streamingServices=None):
-    if genre == None and userRating == None and streamingServices == None:
-        url = "https://api.themoviedb.org/3/discover/movie?api_key=" + tmdbKey + \
-              "&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1"
+def getMovies(genre="", userRating="", streamingServices=""):
 
-        response = requests.get(url)
-        response = response.json()
-        totalPages = response['total_pages']
+    if streamingServices != "":
+        selectedSS = random.choice(streamingServices)
 
-        if totalPages > 500:
-            totalPages = 500
+    url = "https://api.themoviedb.org/3/discover/movie?api_key=" + tmdbKey + \
+          "&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=true&page=1&vote_count.gte=20" \
+          "&vote_average.gte=" + str(userRating) + "&with_genres=" + str(genre) + "&with_watch_providers=" + str(selectedSS) + \
+          "&watch_region=us "
 
-        randomPage = random.randint(1, totalPages)
+    response = requests.get(url)
+    response = response.json()
+    totalPages = response['total_pages']
 
-        url = "https://api.themoviedb.org/3/discover/movie?api_key=" + tmdbKey + \
-              "&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=" + str(randomPage)
+    if totalPages > 500:
+        totalPages = 500
+
+    randomPage = random.randint(1, totalPages)
+
+    url = "https://api.themoviedb.org/3/discover/movie?api_key=" + tmdbKey + \
+          "&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=true&page=" + str(randomPage) + \
+          "&vote_count.gte=20&vote_average.gte=" + str(userRating) + "&with_genres=" + str(genre) + "&with_watch_providers=" + \
+          str(selectedSS) + "&watch_region=us "
 
     response = requests.get(url)
     response = response.json()
@@ -128,4 +135,6 @@ def displayMovie(data):
     response = response.json()
 
 
-print(getUserRating())
+# print(getUserRating())
+
+print(getMovies(28, 7, 9))
