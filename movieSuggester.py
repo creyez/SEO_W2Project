@@ -34,12 +34,17 @@ def getGenre():
         getGenre()
 
 
-
 def getUserRating():
     rating = input("Would you like to specify a minimum user rating? (yes or no): ")
 
 
-# def getStreamingServices():
+def getStreamingServices():
+    streaming_services = ["Netflix", "Amazon Prime Video", "Hulu", "Paramount Plus", "HBO max", "Peacock", "ShowMax", "Apple Tv Plus", "Crunchyroll", "Disney Plus",
+    "HBO Go", "The Roku Channel", "Discovery Plus", "Showtime", "Apple iTunes", "Netflix Kids", "Youtube Premium"]
+
+    streaming_service_id = [8, 119, 15, 531, 384, 386, 55, 350, 283, 390, 31, 207, 510, 37, 2, 175, 188]
+
+    service = input("Would you like to specify a streaming service? (yes or no): ")
 
 
 
