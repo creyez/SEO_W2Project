@@ -158,4 +158,4 @@ movies = getMovies(getGenre(), getUserRating(), getStreamingServices())
 movie_title = movies["results"][0]["title"]
 
 
-print(movie_title.replace(" ", "+"))
+print(movie_title)
