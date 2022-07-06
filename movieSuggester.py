@@ -135,9 +135,14 @@ def getMovies(genre="", userRating="", streamingServices=""):
     return response
 
 
-def displayMovie(data):
+def displayMovie(movie):
+    url = 'http://www.omdbapi.com/?t=' + movie_name
+    movie_name = movie.replace(" ", "+")
+
     response = requests.get(url)
     response = response.json()
+
+    
 
 
 def createDatabase(data):
@@ -150,4 +155,7 @@ def createDatabase(data):
 
 movies = getMovies(getGenre(), getUserRating(), getStreamingServices())
 
-print(movies["results"][0]["title"])
+movie_title = movies["results"][0]["title"]
+
+
+print(movie_title.replace(" ", "+"))
