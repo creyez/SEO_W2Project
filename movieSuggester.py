@@ -3,8 +3,9 @@ import random
 import pandas as pd
 import sqlalchemy as db
 
-tmdbKey = ""
+tmdbKey = "37909ab2a58f4d635646887a974c77a1"
 omdbKey = ""
+
 
 def getGenre():
     url = "https://api.themoviedb.org/3/genre/movie/list?api_key=" + tmdbKey + "&language=en-US"
@@ -28,27 +29,78 @@ def getGenre():
         return idList[genreList.index(userGenre)]
 
     elif genreOrNo.lower() == "no":
-        return -1
+        return None
     else:
         print("Invalid input. Type 'yes' or 'no'")
         getGenre()
 
 
 def getUserRating():
-    rating = input("Would you like to specify a minimum user rating? (yes or no): ")
+    ratingOrNO = input("Would you like to specify a minimum user rating? (yes or no): ")
+
+    if ratingOrNO.lower() == "yes":
+        print("User ratings range from 0 to 10. For reference, most popular movies have an average user rating "
+              "between 6 and 8")
+
+        while True:
+            try:
+                userRating = float(input("Enter a minimum user rating: "))
+                while userRating < 0 or userRating > 10:
+                    userRating = float(input("Invalid input. Enter an number between 0 and 10: "))
+                break
+            except:
+                print("Error: input should be a number.", end=" ")
+
+        return userRating
+
+    elif ratingOrNO.lower() == "no":
+        return None
+    else:
+        print("Invalid input. Type 'yes' or 'no'")
+        getUserRating()
 
 
 def getStreamingServices():
-    streaming_services = ["Netflix", "Amazon Prime Video", "Hulu", "Paramount Plus", "HBO max", "Peacock", "ShowMax", "Apple Tv Plus", "Crunchyroll", "Disney Plus",
-    "HBO Go", "The Roku Channel", "Discovery Plus", "Showtime", "Apple iTunes", "Netflix Kids", "Youtube Premium"]
+    streamingServices = ["Netflix", "Amazon Prime Video", "Hulu", "Paramount Plus", "HBO max", "Peacock", "ShowMax",
+                         "Apple Tv Plus", "Crunchyroll", "Disney Plus",
+                         "HBO Go", "The Roku Channel", "Discovery Plus", "Showtime", "Apple iTunes", "Netflix Kids",
+                         "Youtube Premium", "Google Play Movies"]
 
-    streaming_service_id = [8, 119, 15, 531, 384, 386, 55, 350, 283, 390, 31, 207, 510, 37, 2, 175, 188]
+    idList = [8, 119, 15, 531, 384, 386, 55, 350, 283, 390, 31, 207, 510, 37, 2, 175, 188, 3]
 
-    service = input("Would you like to specify a streaming service? (yes or no): ")
+    serviceOrNo = input("Would you like to specify a streaming service? (yes or no): ")
+
+    if serviceOrNo.lower() == "yes":
+        print("Here are the streaming services available:")
+        print(streamingServices)
+
+        userSS = input("Enter the streaming services you have (separate them with a space): ").strip().split(" ")
+        userSS = [service.lower().capitalize() for service in userSS]
+
+        validInput = True
+
+        for service in userSS:
+            if service not in streamingServices:
+                validInput = False
+
+        while validInput == False:
+            validInput = True
+            userSS = input("Invalid input. Enter any of the streaming services listed above: ").strip().split(" ")
+            userSS = [service.lower().capitalize() for service in userSS]
+            for service in userSS:
+                if service not in streamingServices:
+                    validInput = False
+
+        return [idList[streamingServices.index(service)] for service in userSS]
+
+    elif serviceOrNo.lower() == "no":
+        return None
+    else:
+        print("Invalid input. Type 'yes' or 'no'")
+        getStreamingServices()
 
 
-
-def getMovies(genre = None, userRating = None, streamingServices = None):
+def getMovies(genre=None, userRating=None, streamingServices=None):
     if genre == None and userRating == None and streamingServices == None:
         url = "https://api.themoviedb.org/3/discover/movie?api_key=" + tmdbKey + \
               "&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1"
@@ -70,8 +122,10 @@ def getMovies(genre = None, userRating = None, streamingServices = None):
 
     return response
 
+
 def displayMovie(data):
     response = requests.get(url)
     response = response.json()
 
-print(getGenre())
+
+print(getUserRating())
