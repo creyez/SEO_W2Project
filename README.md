@@ -1,6 +1,6 @@
-# SEO_W2Project
+## SEO_W2Project
 ## Project Name - Movie Suggester
-## File Name - MovieSuggester.py
+## File Name - movieSuggester.py
 
 * **What to Import**
   * Import Requests
@@ -12,3 +12,9 @@
    * Open Movies Database(OMDb)
    * The Movie Database (TMDb)
   
+## Unittests
+## File Name = movieSuggesterTest.py
+
+* **What to import**
+  * Import unittest
+  * Import the file movieSuggester and all its functions
