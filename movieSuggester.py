@@ -145,7 +145,7 @@ def displayMovie(movies):
     movieTitle = movies["results"][movieNumber]["title"]
     movieYear = movies["results"][movieNumber]["release_date"][:4]
 
-    url = "http://www.omdbapi.com/?apikey=" + omdbKey + "&t=+Blood+Red+Sky&y=2021&plot=full"
+    url = "http://www.omdbapi.com/?apikey=" + omdbKey + "&t=" + movieTitle.replace(" ", "+") + "&y=" + str(movieYear) + "&plot=full"
 
     print()
     print("Here is some information about the movie we selected for you:")
