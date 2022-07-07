@@ -48,7 +48,7 @@ def getUserRating():
                 while userRating < 0 or userRating > 10:
                     userRating = float(input("Invalid input. Enter an number between 0 and 10: "))
                 break
-            except:
+            except ValueError:
                 print("Error: input should be a number.", end=" ")
 
         return userRating
@@ -95,6 +95,7 @@ def getStreamingServices():
 
     elif serviceOrNo.lower() == "no":
         return ""
+
     else:
         print("Invalid input. Type 'yes' or 'no'")
         getStreamingServices()
