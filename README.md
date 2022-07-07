@@ -1,4 +1,4 @@
-# SEO_W2Project
+## SEO_W2Project
 ## Project Name - Movie Suggester
 ## File Name - movieSuggester.py
 
