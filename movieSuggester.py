@@ -75,8 +75,9 @@ def getStreamingServices():
         print("Here are the streaming services available:")
         print(streamingServices)
 
-        userSS = input("Enter the streaming services you have (separate them with a space): ").strip().split(" ")
-        userSS = [service.lower().capitalize() for service in userSS]
+        userSS = input("Enter the streaming services you have (separate them with a comma and a space ', '): ").strip().split(", ")
+        userSS = [service.lower() for service in userSS]
+        streamingServices = [service.lower() for service in streamingServices]
 
         validInput = True
 
@@ -84,13 +85,15 @@ def getStreamingServices():
             if service not in streamingServices:
                 validInput = False
 
+
         while validInput == False:
             validInput = True
-            userSS = input("Invalid input. Enter any of the streaming services listed above: ").strip().split(" ")
-            userSS = [service.lower().capitalize() for service in userSS]
+            userSS = input("Enter the streaming services you have (separate them with a comma and a space ', '): ").strip().split(", ")
+            userSS = [service.lower() for service in userSS]
             for service in userSS:
                 if service not in streamingServices:
                     validInput = False
+
 
         return [idList[streamingServices.index(service)] for service in userSS]
 
