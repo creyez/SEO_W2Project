@@ -1,9 +1,7 @@
 import unittest
-from unittest.mock import patch
-import requests
 from movieSuggester import getGenre, getUserRating, getStreamingServices, getMovies, displayMovie
 
-class TestMovieSuggester(unittest.TestCase):
+class TestFileName(unittest.TestCase):
     # def setUp(self):
     #     self.tmdbKey = "37909ab2a58f4d635646887a974c77a1"
 
@@ -39,17 +37,9 @@ class TestMovieSuggester(unittest.TestCase):
 
 
     def test_getMovies(self):
-        # Testing the APIs response to make sure its not invalid and to make sure the json 
-        # response is a list of dictionaries
-        fake_json = {'some':'something'}
-
-        with patch('movieSuggester.getMovies') as mock_get:
-            mock_get.return_value.status_code = 200
-            mock_get.return_value.json.return_value = fake_json
-            response = getMovies(genre="", userRating="", streamingServices="")
-
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.json(), fake_json)
+        # Testing the APIs response to make sure its a python dictionary
+        response = getMovies(genre="", userRating="", streamingServices="")
+        self.assertEqual(type(response), dict)
 
         
     def test_displayMovie(self):
