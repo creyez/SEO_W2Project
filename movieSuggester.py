@@ -235,7 +235,7 @@ def runProgram():
             endProgram = input("Invalid input. Type yes, no, or new: ")
 
         if endProgram.lower() == 'new':
-            break;
+            break
 
     if endProgram.lower() == 'new' or movies == -1:
         runProgram()
