@@ -42,18 +42,7 @@ def getUserRating():
         print("User ratings range from 0 to 10. For reference, most popular movies have an average user rating "
               "between 6 and 8")
 
-        userRating = input("Enter a minimum user rating: ")
-        return checkUserRating(userRating)
-        # while True:
-        #     try:
-        #         userRating = float(input("Enter a minimum user rating: "))
-        #         while userRating < 0 or userRating > 10:
-        #             userRating = float(input("Invalid input. Enter an number between 0 and 10: "))
-        #         break
-        #     except ValueError:
-        #         print("Error: input should be a number.", end=" ")
-
-        # return userRating
+        return checkUserRating()
 
     elif ratingOrNO.lower() == "no":
         return ""
@@ -62,13 +51,17 @@ def getUserRating():
         getUserRating()
 
 
-def checkUserRating(rating):
+def checkUserRating():
+    userRating = input("Enter a minimum user rating: ")
     try:
-        userRating = float(rating)
+        userRating = float(userRating)
+        while userRating < 0 or userRating > 10:
+            userRating = float(input("Invalid input. Enter an number between 0 and 10: "))
         return userRating
     except:
         print("Error: input should be a number.", end=" ")
-        getUserRating()
+        return checkUserRating()
+
 
 
 def getStreamingServices():
@@ -77,7 +70,7 @@ def getStreamingServices():
                          "HBO Go", "The Roku Channel", "Discovery Plus", "Showtime", "Apple iTunes", "Netflix Kids",
                          "Youtube Premium", "Google Play Movies"]
 
-    idList = [8, 119, 15, 531, 384, 386, 55, 350, 283, 390, 31, 207, 510, 37, 2, 175, 188, 3]
+    idList = [8, 9, 15, 531, 384, 386, 55, 350, 283, 390, 31, 207, 510, 37, 2, 175, 188, 3]
 
     serviceOrNo = input("Would you like to specify a streaming service? (yes or no): ")
 
@@ -147,13 +140,15 @@ def getMovies(genre="", userRating="", streamingServices=""):
     return response
 
 
-def displayMovie(movie):
-    url = 'http://www.omdbapi.com/?t=' + movie_name
-    movie_name = movie.replace(" ", "+")
+def displayMovie(movies):
+    movieNumber = random.randint(0, len(movies["results"]))
+    movieTitle = movies["results"][movieNumber]["title"]
+    movieYear = movies["results"][movieNumber]["release_date"][:4]
 
-    response = requests.get(url)
-    response = response.json()
-    pass
+    print()
+    print("Here is some information about the movie we selected for you:")
+    print("Title: " + movieTitle)
+    print("Year: " + movieYear)
 
     
 
@@ -166,9 +161,7 @@ def createDatabase(data):
     pass
 
 
-# movies = getMovies(getGenre(), getUserRating(), getStreamingServices())
+movies = getMovies(getGenre(), getUserRating(), getStreamingServices())
 
-# movie_title = movies["results"][0]["title"]
+displayMovie(movies)
 
-
-print(getUserRating())
