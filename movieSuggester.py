@@ -32,24 +32,21 @@ def getGenre():
         return ""
     else:
         print("Invalid input. Type 'yes' or 'no'")
-        getGenre()
+        return getGenre()
 
 
 def getUserRating():
     ratingOrNO = input("Would you like to specify a minimum user rating? (yes or no): ")
-
     if ratingOrNO.lower() == "yes":
         print("User ratings range from 0 to 10. For reference, most popular movies have an average user rating "
               "between 6 and 8")
-
         userRating = input("Enter a minimum user rating: ")
         return checkUserRating(userRating)
-
     elif ratingOrNO.lower() == "no":
         return ""
     else:
         print("Invalid input. Type 'yes' or 'no'")
-        getUserRating()
+        return getUserRating()
 
 
 def checkUserRating(rating):
@@ -102,7 +99,7 @@ def getStreamingServices():
 
     else:
         print("Invalid input. Type 'yes' or 'no'")
-        getStreamingServices()
+        return getStreamingServices()
 
 
 def getMovies(genre="", userRating="", streamingServices=""):
@@ -140,36 +137,75 @@ def getMovies(genre="", userRating="", streamingServices=""):
     return response
 
 
-def displayMovie(movies):
-    movieNumber = random.randint(0, len(movies["results"]))
-    movieTitle = movies["results"][movieNumber]["title"]
-    movieYear = movies["results"][movieNumber]["release_date"][:4]
+def displayMovie(movie):
+    movieTitle = movie["title"]
+    movieYear = movie["release_date"][:4]
 
-    url = "http://www.omdbapi.com/?apikey=" + omdbKey + "&t=+Blood+Red+Sky&y=2021&plot=full"
+    url = "http://www.omdbapi.com/?apikey=" + omdbKey + "&t=" + movieTitle.replace(" ", "+") + "&y=" + str(
+        movieYear) + "&plot=full"
+
+    response = requests.get(url)
+    response = response.json()
 
     print()
     print("Here is some information about the movie we selected for you:")
-    print("Title: " + movieTitle)
-    print("Year: " + movieYear)
+    print("Title: " + response["Title"])
+    print("Year: " + response["Year"])
+    print("Rated: " + response["Rated"])
+    print("Runtime: " + response["Runtime"])
+    print("Genre: " + response["Genre"])
+    print("Director: " + response["Director"])
+    print("Writer: " + response["Writer"])
+    print("Language: " + response["Language"])
+    print("Plot: " + response["Plot"])
+    print("Ratings: ")
+    for rating in response["Ratings"]:
+        print("   Source: " + rating["Source"])
+        print("   Value: " + rating["Value"])
 
 
-def createDatabase(data):
-    # Convert python dict into pandas data frame
-    # convert pandas data frame to a sql dataframe 
-    # query a result
-    # display the result to the user 
-    pass
+def createRecommendationsDatabase(movie):
+    movieID = movie["id"]
+
+    url = "https://api.themoviedb.org/3/movie/" + str(movieID) + "/recommendations?api_key=" + tmdbKey + \
+          "&language=en-US&page=1"
+
+<<<<<<< HEAD
+=======
+    response = requests.get(url)
+    response = response.json()
+    response = response["results"]
+
+    df = pd.DataFrame.from_dict(response)
+>>>>>>> bfca562cb62dec339c784129b245bd6abd8fb084
+
+    df1 = df[['title', 'release_date', 'vote_average', 'overview']]
+
+    engine = db.create_engine('sqlite:///data_base_name.db')
+    df1.to_sql('similarMovies', con=engine, if_exists='replace', index=False)
+    query_result = engine.execute("SELECT * FROM similarMovies;").fetchall()
+    print(pd.DataFrame(query_result))
 
 
-movies = getMovies(getGenre(), getUserRating(), getStreamingServices())
 
-
+<<<<<<< HEAD
 # movie_title = movies["results"][0]["title"]
+=======
+>>>>>>> bfca562cb62dec339c784129b245bd6abd8fb084
 
 
-displayMovie(movies)
 
+<<<<<<< HEAD
 
 # print(movies)
 # print(movie_title)
+=======
+>>>>>>> bfca562cb62dec339c784129b245bd6abd8fb084
 
+
+movies = getMovies(getGenre(), getUserRating(), getStreamingServices())
+movieNumber = random.randint(0, len(movies["results"]))
+selectedMovie = movies["results"][movieNumber]
+
+displayMovie(selectedMovie)
+createRecommendationsDatabase(selectedMovie)
