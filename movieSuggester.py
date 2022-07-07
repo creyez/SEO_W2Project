@@ -44,16 +44,6 @@ def getUserRating():
 
         userRating = input("Enter a minimum user rating: ")
         return checkUserRating(userRating)
-        # while True:
-        #     try:
-        #         userRating = float(input("Enter a minimum user rating: "))
-        #         while userRating < 0 or userRating > 10:
-        #             userRating = float(input("Invalid input. Enter an number between 0 and 10: "))
-        #         break
-        #     except ValueError:
-        #         print("Error: input should be a number.", end=" ")
-
-        # return userRating
 
     elif ratingOrNO.lower() == "no":
         return ""
@@ -65,10 +55,13 @@ def getUserRating():
 def checkUserRating(rating):
     try:
         userRating = float(rating)
+        while userRating < 0 or userRating > 10:
+            userRating = float(input("Invalid input. Enter an number between 0 and 10: "))
         return userRating
     except:
         print("Error: input should be a number.", end=" ")
-        getUserRating()
+        rating = input("Enter a minimum user rating: ")
+        return checkUserRating(rating)
 
 
 def getStreamingServices():
@@ -77,7 +70,7 @@ def getStreamingServices():
                          "HBO Go", "The Roku Channel", "Discovery Plus", "Showtime", "Apple iTunes", "Netflix Kids",
                          "Youtube Premium", "Google Play Movies"]
 
-    idList = [8, 119, 15, 531, 384, 386, 55, 350, 283, 390, 31, 207, 510, 37, 2, 175, 188, 3]
+    idList = [8, 9, 15, 531, 384, 386, 55, 350, 283, 390, 31, 207, 510, 37, 2, 175, 188, 3]
 
     serviceOrNo = input("Would you like to specify a streaming service? (yes or no): ")
 
@@ -166,9 +159,10 @@ def createDatabase(data):
     pass
 
 
-# movies = getMovies(getGenre(), getUserRating(), getStreamingServices())
+movies = getMovies(getGenre(), getUserRating(), getStreamingServices())
 
-# movie_title = movies["results"][0]["title"]
+movie_title = movies["results"][0]["title"]
 
 
-print(getUserRating())
+print(movies)
+print(movie_title)
