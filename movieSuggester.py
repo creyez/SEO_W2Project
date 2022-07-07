@@ -58,7 +58,7 @@ def checkUserRating(rating):
         while userRating < 0 or userRating > 10:
             userRating = float(input("Invalid input. Enter an number between 0 and 10: "))
         return userRating
-    except:
+    except ValueError:
         print("Error: input should be a number.", end=" ")
         rating = input("Enter a minimum user rating: ")
         return checkUserRating(rating)
@@ -152,8 +152,6 @@ def displayMovie(movies):
     print("Title: " + movieTitle)
     print("Year: " + movieYear)
 
-    
-
 
 def createDatabase(data):
     # Convert python dict into pandas data frame
@@ -166,11 +164,12 @@ def createDatabase(data):
 movies = getMovies(getGenre(), getUserRating(), getStreamingServices())
 
 
-movie_title = movies["results"][0]["title"]
+# movie_title = movies["results"][0]["title"]
 
 
 displayMovie(movies)
 
-print(movies)
-print(movie_title)
+
+# print(movies)
+# print(movie_title)
 
