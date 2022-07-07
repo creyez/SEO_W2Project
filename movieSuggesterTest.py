@@ -1,5 +1,5 @@
 import unittest
-from movieSuggester import getGenre, getUserRating, getStreamingServices, getMovies, displayMovie
+from movieSuggester import getGenre, getUserRating, checkUserRating, getStreamingServices, getMovies, displayMovie
 
 class TestFileName(unittest.TestCase):
     # def setUp(self):
@@ -16,15 +16,17 @@ class TestFileName(unittest.TestCase):
         if type(id_returned) == list:
             self.assertNotEqual(len(id_returned), 0)
 
-    def test_getUserRating(self):
+    def test_checkUserRating(self):
         # Checking that an exception is raised if the user inputs a value 
         # that cannot be converted into a float
+        rating = 'abcd'
 
-        # with self.assertRaises(ValueError) as exception_context:
-
-
-        # self.assertRaises()
-        pass
+        with self.assertRaises(ValueError) as exception_context:
+            checkUserRating(rating)
+        self.assertRaises(
+                   str(exception_context.exception),
+            "Error: input should be a number.", end=" "
+        )
 
 
     def test_getStreamingServices(self):
