@@ -42,21 +42,32 @@ def getUserRating():
         print("User ratings range from 0 to 10. For reference, most popular movies have an average user rating "
               "between 6 and 8")
 
-        while True:
-            try:
-                userRating = float(input("Enter a minimum user rating: "))
-                while userRating < 0 or userRating > 10:
-                    userRating = float(input("Invalid input. Enter an number between 0 and 10: "))
-                break
-            except ValueError:
-                print("Error: input should be a number.", end=" ")
+        userRating = input("Enter a minimum user rating: ")
+        return checkUserRating(userRating)
+        # while True:
+        #     try:
+        #         userRating = float(input("Enter a minimum user rating: "))
+        #         while userRating < 0 or userRating > 10:
+        #             userRating = float(input("Invalid input. Enter an number between 0 and 10: "))
+        #         break
+        #     except ValueError:
+        #         print("Error: input should be a number.", end=" ")
 
-        return userRating
+        # return userRating
 
     elif ratingOrNO.lower() == "no":
         return ""
     else:
         print("Invalid input. Type 'yes' or 'no'")
+        getUserRating()
+
+
+def checkUserRating(rating):
+    try:
+        userRating = float(rating)
+        return userRating
+    except:
+        print("Error: input should be a number.", end=" ")
         getUserRating()
 
 
@@ -142,6 +153,7 @@ def displayMovie(movie):
 
     response = requests.get(url)
     response = response.json()
+    pass
 
     
 
@@ -154,9 +166,9 @@ def createDatabase(data):
     pass
 
 
-movies = getMovies(getGenre(), getUserRating(), getStreamingServices())
+# movies = getMovies(getGenre(), getUserRating(), getStreamingServices())
 
-movie_title = movies["results"][0]["title"]
+# movie_title = movies["results"][0]["title"]
 
 
-print(movie_title)
+print(getUserRating())
