@@ -42,8 +42,12 @@ def getUserRating():
         print("User ratings range from 0 to 10. For reference, most popular movies have an average user rating "
               "between 6 and 8")
 
+<<<<<<< HEAD
         userRating = input("Enter a minimum user rating: ")
         return checkUserRating(userRating)
+=======
+        return checkUserRating()
+>>>>>>> 2213021ae4ea4bde41534bbc74f5aae2186e30a7
 
     elif ratingOrNO.lower() == "no":
         return ""
@@ -52,16 +56,26 @@ def getUserRating():
         getUserRating()
 
 
-def checkUserRating(rating):
+def checkUserRating():
+    userRating = input("Enter a minimum user rating: ")
     try:
+<<<<<<< HEAD
         userRating = float(rating)
+=======
+        userRating = float(userRating)
+>>>>>>> 2213021ae4ea4bde41534bbc74f5aae2186e30a7
         while userRating < 0 or userRating > 10:
             userRating = float(input("Invalid input. Enter an number between 0 and 10: "))
         return userRating
     except:
         print("Error: input should be a number.", end=" ")
+<<<<<<< HEAD
         rating = input("Enter a minimum user rating: ")
         return checkUserRating(rating)
+=======
+        return checkUserRating()
+
+>>>>>>> 2213021ae4ea4bde41534bbc74f5aae2186e30a7
 
 
 def getStreamingServices():
@@ -140,13 +154,15 @@ def getMovies(genre="", userRating="", streamingServices=""):
     return response
 
 
-def displayMovie(movie):
-    url = 'http://www.omdbapi.com/?t=' + movie_name
-    movie_name = movie.replace(" ", "+")
+def displayMovie(movies):
+    movieNumber = random.randint(0, len(movies["results"]))
+    movieTitle = movies["results"][movieNumber]["title"]
+    movieYear = movies["results"][movieNumber]["release_date"][:4]
 
-    response = requests.get(url)
-    response = response.json()
-    pass
+    print()
+    print("Here is some information about the movie we selected for you:")
+    print("Title: " + movieTitle)
+    print("Year: " + movieYear)
 
     
 
@@ -160,9 +176,16 @@ def createDatabase(data):
 
 
 movies = getMovies(getGenre(), getUserRating(), getStreamingServices())
+<<<<<<< HEAD
 
 movie_title = movies["results"][0]["title"]
+=======
+>>>>>>> 2213021ae4ea4bde41534bbc74f5aae2186e30a7
 
+displayMovie(movies)
 
+<<<<<<< HEAD
 print(movies)
 print(movie_title)
+=======
+>>>>>>> 2213021ae4ea4bde41534bbc74f5aae2186e30a7
