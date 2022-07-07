@@ -4,7 +4,7 @@ import pandas as pd
 import sqlalchemy as db
 
 tmdbKey = "37909ab2a58f4d635646887a974c77a1"
-omdbKey = ""
+omdbKey = "44a1fd91"
 
 
 def getGenre():
@@ -144,6 +144,8 @@ def displayMovie(movies):
     movieNumber = random.randint(0, len(movies["results"]))
     movieTitle = movies["results"][movieNumber]["title"]
     movieYear = movies["results"][movieNumber]["release_date"][:4]
+
+    url = "http://www.omdbapi.com/?apikey=" + omdbKey + "&t=+Blood+Red+Sky&y=2021&plot=full"
 
     print()
     print("Here is some information about the movie we selected for you:")
