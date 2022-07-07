@@ -75,8 +75,10 @@ def getStreamingServices():
         print("Here are the streaming services available:")
         print(streamingServices)
 
-        userSS = input("Enter the streaming services you have (separate them with a space): ").strip().split(" ")
-        userSS = [service.lower().capitalize() for service in userSS]
+        userSS = input(
+            "Enter the streaming services you have (separate them with a comma and a space ', '): ").strip().split(", ")
+        userSS = [service.lower() for service in userSS]
+        streamingServices = [service.lower() for service in streamingServices]
 
         validInput = True
 
@@ -86,8 +88,10 @@ def getStreamingServices():
 
         while validInput == False:
             validInput = True
-            userSS = input("Invalid input. Enter any of the streaming services listed above: ").strip().split(" ")
-            userSS = [service.lower().capitalize() for service in userSS]
+            userSS = input(
+                "Enter the streaming services you have (separate them with a comma and a space ', '): ").strip().split(
+                ", ")
+            userSS = [service.lower() for service in userSS]
             for service in userSS:
                 if service not in streamingServices:
                     validInput = False
@@ -103,65 +107,76 @@ def getStreamingServices():
 
 
 def getMovies(genre="", userRating="", streamingServices=""):
-    if streamingServices != "":
-        selectedSS = random.choice(streamingServices)
-    else:
-        selectedSS = ""
+    try:
 
-    url = "https://api.themoviedb.org/3/discover/movie?api_key=" + tmdbKey + "&language=en-US" \
-                                                                             "&sort_by=popularity.desc&include_adult" \
-                                                                             "=false&include_video=false&page=1" \
-                                                                             "&vote_count.gte=20&vote_average.gte" \
-                                                                             "=" + str(
-        userRating) + "&with_genres=" + str(genre) + "&with_watch_providers=" + str(selectedSS) + \
-          "&watch_region=US"
+        if streamingServices != "":
+            selectedSS = random.choice(streamingServices)
+        else:
+            selectedSS = ""
 
-    response = requests.get(url)
-    response = response.json()
-    totalPages = response['total_pages']
+        url = "https://api.themoviedb.org/3/discover/movie?api_key=" + tmdbKey + "&language=en-US" \
+                                                                                 "&sort_by=popularity.desc&include_adult" \
+                                                                                 "=false&include_video=false&page=1" \
+                                                                                 "&vote_count.gte=20&vote_average.gte" \
+                                                                                 "=" + str(
+            userRating) + "&with_genres=" + str(genre) + "&with_watch_providers=" + str(selectedSS) + \
+              "&watch_region=US"
 
-    if totalPages > 500:
-        totalPages = 500
+        response = requests.get(url)
+        response = response.json()
+        totalPages = response['total_pages']
 
-    randomPage = random.randint(1, totalPages)
+        if totalPages > 500:
+            totalPages = 500
 
-    url = "https://api.themoviedb.org/3/discover/movie?api_key=" + tmdbKey + \
-          "&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=" + str(randomPage) + \
-          "&vote_count.gte=20&vote_average.gte=" + str(userRating) + "&with_genres=" + str(
-        genre) + "&with_watch_providers=" + \
-          str(selectedSS) + "&watch_region=US"
+        randomPage = random.randint(1, totalPages)
 
-    response = requests.get(url)
-    response = response.json()
+        url = "https://api.themoviedb.org/3/discover/movie?api_key=" + tmdbKey + \
+              "&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=" + str(
+            randomPage) + \
+              "&vote_count.gte=20&vote_average.gte=" + str(userRating) + "&with_genres=" + str(
+            genre) + "&with_watch_providers=" + \
+              str(selectedSS) + "&watch_region=US"
 
-    return response
+        response = requests.get(url)
+        response = response.json()
+
+        return response
+    except:
+        print("No movies found.")
+        return -1
 
 
 def displayMovie(movie):
     movieTitle = movie["title"]
     movieYear = movie["release_date"][:4]
 
-    url = "http://www.omdbapi.com/?apikey=" + omdbKey + "&t=" + movieTitle.replace(" ", "+") + "&y=" + str(
-        movieYear) + "&plot=full"
+    try:
+        url = "http://www.omdbapi.com/?apikey=" + omdbKey + "&t=" + movieTitle.replace(" ", "+") + "&y=" + str(
+            movieYear) + "&plot=short"
 
-    response = requests.get(url)
-    response = response.json()
+        response = requests.get(url)
+        response = response.json()
 
-    print()
-    print("Here is some information about the movie we selected for you:")
-    print("Title: " + response["Title"])
-    print("Year: " + response["Year"])
-    print("Rated: " + response["Rated"])
-    print("Runtime: " + response["Runtime"])
-    print("Genre: " + response["Genre"])
-    print("Director: " + response["Director"])
-    print("Writer: " + response["Writer"])
-    print("Language: " + response["Language"])
-    print("Plot: " + response["Plot"])
-    print("Ratings: ")
-    for rating in response["Ratings"]:
-        print("   Source: " + rating["Source"])
-        print("   Value: " + rating["Value"])
+        title = response["Title"]
+
+        print()
+        print("Here is some information about the movie we selected for you:")
+        print("Title: " + title)
+        print("Year: " + response["Year"])
+        print("Rated: " + response["Rated"])
+        print("Runtime: " + response["Runtime"])
+        print("Genre: " + response["Genre"])
+        print("Director: " + response["Director"])
+        print("Writer: " + response["Writer"])
+        print("Language: " + response["Language"])
+        print("Plot: " + response["Plot"])
+        print("Ratings: ")
+        for rating in response["Ratings"]:
+            print("   Source: " + rating["Source"])
+            print("   Value: " + rating["Value"])
+    except:
+        return -1
 
 
 def createRecommendationsDatabase(movie):
@@ -174,38 +189,79 @@ def createRecommendationsDatabase(movie):
 =======
     response = requests.get(url)
     response = response.json()
-    response = response["results"]
 
+<<<<<<< HEAD
     df = pd.DataFrame.from_dict(response)
 >>>>>>> bfca562cb62dec339c784129b245bd6abd8fb084
+=======
+    try:
+        response = response["results"]
 
-    df1 = df[['title', 'release_date', 'vote_average', 'overview']]
+        df = pd.DataFrame.from_dict(response)
 
-    engine = db.create_engine('sqlite:///data_base_name.db')
-    df1.to_sql('similarMovies', con=engine, if_exists='replace', index=False)
-    query_result = engine.execute("SELECT * FROM similarMovies;").fetchall()
-    print(pd.DataFrame(query_result))
+        df1 = df[['title', 'release_date', 'vote_average', 'overview']]
 
+        engine = db.create_engine('sqlite:///data_base_name.db')
+        df1.to_sql('similarMovies', con=engine, if_exists='replace', index=False)
+        query_result = engine.execute("SELECT * FROM similarMovies LIMIT 10;").fetchall()
+        print()
+        print("Here is a table of similar movies: ")
+        print(pd.DataFrame(query_result))
+    except:
+        print()
+        print("We could not find any similar movies.")
 
+>>>>>>> f07e24fb722e6344d273223ca334f22381fe78d4
 
+def runProgram():
+    genre = getGenre()
+    userRating = getUserRating()
+    streamingServices = getStreamingServices()
+
+    endProgram = ""
+
+    while endProgram.lower() != "no":
+        movies = getMovies(genre, userRating, streamingServices)
+        if movies == -1:
+            break
+        movieNumber = random.randint(0, len(movies["results"]) - 1)
+        selectedMovie = movies["results"][movieNumber]
+
+        while displayMovie(selectedMovie) == -1:
+            movies = getMovies(genre, userRating, streamingServices)
+            movieNumber = random.randint(0, len(movies["results"]) - 1)
+            selectedMovie = movies["results"][movieNumber]
+
+<<<<<<< HEAD
 <<<<<<< HEAD
 # movie_title = movies["results"][0]["title"]
 =======
 >>>>>>> bfca562cb62dec339c784129b245bd6abd8fb084
+=======
+        createRecommendationsDatabase(selectedMovie)
+        print()
+>>>>>>> f07e24fb722e6344d273223ca334f22381fe78d4
 
+        endProgram = input("Would you like to search for a new movie? Type 'yes' or 'no'. Type 'new' to enter new "
+                           "inputs: ")
 
+        while endProgram.lower() != 'yes' and endProgram.lower() != 'no' and endProgram.lower() != 'new':
+            endProgram = input("Invalid input. Type yes, no, or new: ")
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 
 # print(movies)
 # print(movie_title)
 =======
 >>>>>>> bfca562cb62dec339c784129b245bd6abd8fb084
+=======
+        if endProgram.lower() == 'new':
+            break;
+>>>>>>> f07e24fb722e6344d273223ca334f22381fe78d4
+
+    if endProgram.lower() == 'new' or movies == -1:
+        runProgram()
 
 
-movies = getMovies(getGenre(), getUserRating(), getStreamingServices())
-movieNumber = random.randint(0, len(movies["results"]))
-selectedMovie = movies["results"][movieNumber]
-
-displayMovie(selectedMovie)
-createRecommendationsDatabase(selectedMovie)
+runProgram()
