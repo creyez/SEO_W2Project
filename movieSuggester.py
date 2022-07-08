@@ -194,7 +194,7 @@ def displayMovie(movie):
         for rating in response["Ratings"]:
             print("   Source: " + rating["Source"])
             print("   Value: " + rating["Value"])
-    except ValueError:
+    except KeyError:
         return -1
 
 
