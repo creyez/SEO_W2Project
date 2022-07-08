@@ -6,6 +6,7 @@ import sqlalchemy as db
 tmdbKey = "37909ab2a58f4d635646887a974c77a1"
 omdbKey = "44a1fd91"
 
+print()
 print("This program recommends a movie based on your preferences!")
 print()
 
