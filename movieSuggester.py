@@ -6,6 +6,8 @@ import sqlalchemy as db
 tmdbKey = "37909ab2a58f4d635646887a974c77a1"
 omdbKey = "44a1fd91"
 
+print("This program recommends a movie based on your preferences!")
+print()
 
 def getGenre():
     url = "https://api.themoviedb.org/3/genre/movie/list?api_key=" \
@@ -149,7 +151,8 @@ def getMovies(genre="", userRating="", streamingServices=""):
               "include_adult=false&include_video=false&page=" \
               + str(randomPage) + "&vote_count.gte=20&vote_average.gte=" \
               + str(userRating) + "&with_genres=" + str(genre) + \
-              "&with_watch_providers=" + str(selectedSS) + "&watch_region=US"
+              "&with_watch_providers=" + \
+              str(selectedSS) + "&watch_region=US"
 
         response = requests.get(url)
         response = response.json()
