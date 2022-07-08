@@ -217,8 +217,10 @@ def createRecommendationsDatabase(movie):
         df1 = df[['title', 'release_date', 'vote_average', 'overview']]
 
         engine = db.create_engine('sqlite:///data_base_name.db')
-        df1.to_sql('similarMovies', con=engine, if_exists='replace', index=False)
-        query_result = engine.execute("SELECT * FROM similarMovies LIMIT 10;").fetchall()
+        df1.to_sql('similarMovies', con=engine, if_exists='replace',
+                   index=False)
+        query_result = engine.execute("SELECT * FROM similarMovies LIMIT 10;"
+                                      ).fetchall()
         print()
         print("Here is a table of similar movies: ")
         print(pd.DataFrame(query_result))
