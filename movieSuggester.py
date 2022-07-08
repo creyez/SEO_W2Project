@@ -130,9 +130,9 @@ def getMovies(genre="", userRating="", streamingServices=""):
             selectedSS = ""
 
         url = "https://api.themoviedb.org/3/discover/movie?api_key=" \
-              + tmdbKey + "&language=en-US&sort_by=popularity.desc&"\
-              "include_adult=false&include_video=false&page=1&"\
-              "vote_count.gte=20&vote_average.gte=" + \
+              + tmdbKey + "&language=en-US&sort_by=popularity.desc&" \
+                          "include_adult=false&include_video=false&page=1&" \
+                          "vote_count.gte=20&vote_average.gte=" + \
               str(userRating) + "&with_genres=" + str(genre) + \
               "&with_watch_providers=" + str(selectedSS) + \
               "&watch_region=US"
@@ -148,7 +148,7 @@ def getMovies(genre="", userRating="", streamingServices=""):
 
         url = "https://api.themoviedb.org/3/discover/movie?api_key=" \
               + tmdbKey + "&language=en-US&sort_by=popularity.desc&" \
-              "include_adult=false&include_video=false&page=" \
+                          "include_adult=false&include_video=false&page=" \
               + str(randomPage) + "&vote_count.gte=20&vote_average.gte=" \
               + str(userRating) + "&with_genres=" + str(genre) + \
               "&with_watch_providers=" + \
