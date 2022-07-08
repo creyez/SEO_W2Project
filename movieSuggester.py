@@ -10,6 +10,7 @@ print()
 print("This program recommends a movie based on your preferences!")
 print()
 
+
 def getGenre():
     url = "https://api.themoviedb.org/3/genre/movie/list?api_key=" \
           + tmdbKey + "&language=en-US"

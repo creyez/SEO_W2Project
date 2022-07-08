@@ -1,9 +1,9 @@
 import unittest
-from movieSuggester import getGenre, getUserRating, checkUserRating, getStreamingServices, getMovies, displayMovie
+from movieSuggester import getGenre, getUserRating, checkUserRating, getStreamingServices, getMovies, displayMovie, createRecommendationsDatabase, runProgram
 
 class TestFileName(unittest.TestCase):
     def test_getGenre(self):
-        # Testing the APIs response to make sure its not invalid and to 
+        # Testing the APIs response to make sure its not invalid and to
         # make sure the genreList and idList are not empty
         id_returned = getGenre()
         if type(id_returned) == list:
@@ -16,7 +16,7 @@ class TestFileName(unittest.TestCase):
         if rating != '':
             self.assertEqual(type(rating), float)
             self.asserTrue(0 <= rating <= 10)
-         
+
     def test_getStreamingServices(self):
         # Checking that if the user decided to enter a streaming services 
         # the list being returned is not empty
@@ -29,12 +29,13 @@ class TestFileName(unittest.TestCase):
         response = getMovies(genre="", userRating="", streamingServices="")
         self.assertEqual(type(response), dict)
  
-    def test_displayMovie(self):
-        # Testing the APIs response to make sure its not invalid and to make sure the json 
-        # response is a list of dictionaries
+    def test_runProgram(self):
+        # Making sure that all the responses from the requests are valid
+        # Will also test the displayMovie() function and 
+        # createRecommendationsDatabase() function since both functions are
+        # called inside runProgram
         pass
-
-
+        
 
 if __name__ == '__main__':
     unittest.main()
