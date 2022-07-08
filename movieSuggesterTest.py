@@ -1,7 +1,7 @@
 import unittest
-from movieSuggester import (getGenre, getUserRating,
-checkUserRating, getStreamingServices, getMovies,
-displayMovie, createRecommendationsDatabase, runProgram)
+from movieSuggester import (getGenre, getUserRating, checkUserRating,
+                            getStreamingServices, getMovies, displayMovie,
+                            createRecommendationsDatabase, runProgram)
 
 
 class TestFileName(unittest.TestCase):

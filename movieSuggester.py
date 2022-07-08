@@ -160,7 +160,7 @@ def getMovies(genre="", userRating="", streamingServices=""):
         response = response.json()
 
         return response
-    except:
+    except ValueError:
         print("No movies found.")
         return -1
 
@@ -264,5 +264,6 @@ def runProgram():
 
     if endProgram.lower() == 'new' or movies == -1:
         runProgram()
+
 
 runProgram()
