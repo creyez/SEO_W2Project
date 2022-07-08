@@ -224,7 +224,7 @@ def createRecommendationsDatabase(movie):
         print()
         print("Here is a table of similar movies: ")
         print(pd.DataFrame(query_result))
-    except:
+    except ValueError:
         print()
         print("We could not find any similar movies.")
 
